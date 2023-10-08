@@ -1,11 +1,39 @@
-import { Component } from 'react';
 import PropTypes from 'prop-types';
 import css from './ImageGallery.module.css';
-import getImages from 'fetch';
 import ImageGalleryItem from './ImageGalleryItem/ImageGalleryItem';
-import Loader from '../Loader/Loader';
-import Button from '../Button/Button';
 
+
+export const ImageGallery = ({ images, onImgClick }) => {
+  return (
+    <ul onClick={onImgClick} className={css.gallery}>
+      {images.map(({ id, webformatURL, tags, largeImageURL }) => {
+        return (
+          <ImageGalleryItem
+            onImgClick={onImgClick}
+            webformatURL={webformatURL}
+            largeImageURL={largeImageURL}
+            tags={tags}
+            key={id}
+          />
+        );
+      })}
+    </ul>
+  );
+};
+
+PropTypes.ImageGallery = {
+  onImgClick: PropTypes.func.isRequired,
+  images: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      webFormatUrl: PropTypes.string.isRequired,
+      largeImageURL: PropTypes.string.isRequired,
+      tags: PropTypes.string.isRequired,
+    }).isRequired
+  ),
+};
+
+/*
 export default class ImageGallery extends Component {
   static propTypes = {
     onClick: PropTypes.func.isRequired,
@@ -83,3 +111,4 @@ export default class ImageGallery extends Component {
     }
   }
 }
+*/
